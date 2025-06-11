@@ -1,0 +1,37 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  immich-app.service
+BindsTo=immich.service
+After=immich.service postgresql-app.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+EnvironmentFile=-%S/state/smarthost.env
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/mkdir -p config
+ExecStartPre=/bin/rm -f %t/immich-app.pid %t/immich-app.ctr-id
+ExecStartPre=-runagent discover-smarthost
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
+    --cidfile %t/immich-app.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/immich.pod-id --replace -d --name  immich-app \
+    --volume immich-app:/var/www/html/:Z \
+    --volume ./config:/tmp:Z \
+    --env=NGINX_* \
+    --env 'CONFIG_DATABASE_URI="postgresql://postgres:Nethesis,1234@127.0.0.1:5432/immich"' \
+    ${NGINX_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/immich-app.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP immich-app
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/immich-app.ctr-id
+PIDFile=%t/immich-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
