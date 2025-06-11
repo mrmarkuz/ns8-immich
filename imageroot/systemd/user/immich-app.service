@@ -6,7 +6,7 @@
 [Unit]
 Description=Podman  immich-app.service
 BindsTo=immich.service
-After=immich.service postgresql-app.service
+After=immich.service postgresql-app.service immich-redis.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
@@ -21,11 +21,9 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
     --cidfile %t/immich-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/immich.pod-id --replace -d --name  immich-app \
-    --volume immich-app:/var/www/html/:Z \
-    --volume ./config:/tmp:Z \
-    --env=NGINX_* \
-    --env 'CONFIG_DATABASE_URI="postgresql://postgres:Nethesis,1234@127.0.0.1:5432/immich"' \
-    ${NGINX_IMAGE}
+    --volume ${UPLOAD_LOCATION}:/usr/src/app/upload:Z \
+    --volume /etc/localtime:/etc/localtime:ro \
+    ${IMMICH_SERVER_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/immich-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP immich-app
 SyslogIdentifier=%u

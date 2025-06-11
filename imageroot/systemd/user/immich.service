@@ -10,7 +10,7 @@
 
 [Unit]
 Description=Podman immich.service
-Requires=postgresql-app.service immich-app.service
+Requires=postgresql-app.service immich-redis.service immich-app.service immich-machine-learning.service
 Before=postgresql-app.service immich-app.service
 
 [Service]

@@ -1,0 +1,34 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  immich-machine-learning.service
+BindsTo=immich.service
+After=immich.service postgresql-app.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+EnvironmentFile=-%S/state/smarthost.env
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/mkdir -p config
+ExecStartPre=/bin/rm -f %t/immich-machine-learning.pid %t/immich-machine-learning.ctr-id
+ExecStartPre=-runagent discover-smarthost
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-machine-learning.pid \
+    --cidfile %t/immich-machine-learning.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/immich.pod-id --replace -d --name  immich-machine-learning \
+    --volume model-cache:/cache:Z \
+    ${IMMICH_MACHINE_LEARNING_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/immich-machine-learning.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP immich-machine-learning
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/immich-machine-learning.ctr-id
+PIDFile=%t/immich-machine-learning.pid
+Type=forking
+
+[Install]
+WantedBy=default.target

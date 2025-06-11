@@ -8,10 +8,13 @@
 # Terminate on error
 set -e
 
+# immich version
+IMMICH_VERSION="release"
+
 # Prepare variables for later use
 images=()
 # The image will be pushed to GitHub container registry
-repobase="${REPOBASE:-ghcr.io/nethserver}"
+repobase="${REPOBASE:-ghcr.io/mrmarkuz}"
 # Configure the image name
 reponame="immich"
 
@@ -45,7 +48,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=docker.io/postgres:15.8-alpine3.19 docker.io/nginx:1.27.1-alpine3.20" \
+    --label="org.nethserver.images=docker.io/postgres:15.8-alpine3.19 ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release} ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release} docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
