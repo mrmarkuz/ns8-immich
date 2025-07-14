@@ -25,6 +25,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/postgresql-app.pid \
     --env POSTGRES_USER=postgres \
     --env POSTGRES_PASSWORD=Nethesis,1234 \
     --env POSTGRES_DB=immich \
+    --env POSTGRES_INITDB_ARGS=--data-checksums \
     --env TZ=UTC \
     ${POSTGRES_IMAGE}
 ExecStartPost=/usr/bin/bash -c "while ! podman  exec postgresql-app psql -U postgres -d immich ;  do sleep 5 ; done"

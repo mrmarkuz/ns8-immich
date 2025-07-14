@@ -15,7 +15,6 @@ EnvironmentFile=-%S/state/smarthost.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/immich-app.pid %t/immich-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
@@ -23,6 +22,11 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
     --pod-id-file %t/immich.pod-id --replace -d --name  immich-app \
     --volume ${UPLOAD_LOCATION}:/usr/src/app/upload:Z \
     --volume /etc/localtime:/etc/localtime:ro \
+    --env UPLOAD_LOCATION=./library \
+    --env DB_DATA_LOCATION=./postgres \
+#    --env IMMICH_VERSION=release \
+    --env DB_PASSWORD=Nethesis,1234 \
+    --env DB_DATABASE_NAME=immich \
     ${IMMICH_SERVER_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/immich-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP immich-app

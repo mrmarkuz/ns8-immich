@@ -48,7 +48,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=docker.io/postgres:15.8-alpine3.19 ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release} ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release} docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884" \
+    --label="org.nethserver.images=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0 ghcr.io/immich-app/immich-server:v1.135.3 ghcr.io/immich-app/immich-machine-learning:v1.135.3 docker.io/valkey/valkey:8-bookworm@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
