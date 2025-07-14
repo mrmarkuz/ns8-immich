@@ -21,6 +21,7 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-redis.pid \
     --cidfile %t/immich-redis.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/immich.pod-id --replace -d --name  immich-redis \
+    --volume redis-data:/data:Z \
     ${VALKEY_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/immich-redis.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP immich-redis
