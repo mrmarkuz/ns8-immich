@@ -6,7 +6,7 @@
 [Unit]
 Description=Podman  immich-app.service
 BindsTo=immich.service
-After=immich.service postgresql-app.service immich-redis.service
+After=immich.service database.service redis.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
@@ -20,10 +20,10 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
     --cidfile %t/immich-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/immich.pod-id --replace -d --name  immich-app \
-    --volume ${UPLOAD_LOCATION}:/usr/src/app/upload:Z \
+    --volume immich-data:/usr/src/app/upload:Z \
     --volume /etc/localtime:/etc/localtime:ro \
-    --env UPLOAD_LOCATION=./library \
-    --env DB_DATA_LOCATION=./postgres \
+#    --env UPLOAD_LOCATION=./library \
+#    --env DB_DATA_LOCATION=./postgres \
 #    --env IMMICH_VERSION=release \
     --env DB_PASSWORD=Nethesis,1234 \
     --env DB_DATABASE_NAME=immich \

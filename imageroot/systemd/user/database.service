@@ -4,7 +4,7 @@
 #
 
 [Unit]
-Description=Podman postgresql-app.service
+Description=Podman database.service
 BindsTo=immich.service
 After=immich.service
 
@@ -14,11 +14,11 @@ EnvironmentFile=%S/state/environment
 # EnvironmentFile=%S/state/secrets/passwords.secret
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/rm -f %t/postgresql-app.pid %t/postgresql-app.ctr-id
+ExecStartPre=/bin/rm -f %t/database.pid %t/database.ctr-id
 ExecStartPre=/bin/mkdir -p %S/state/restore/
-ExecStart=/usr/bin/podman run --conmon-pidfile %t/postgresql-app.pid \
-    --cidfile %t/postgresql-app.ctr-id --cgroups=no-conmon \
-    --pod-id-file %t/immich.pod-id --replace -d --name postgresql-app \
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/database.pid \
+    --cidfile %t/database.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/immich.pod-id --replace -d --name database \
     --env-file=%S/state/environment \
     --volume postgres-data:/var/lib/postgresql/data:Z \
     --volume %S/state/restore/:/docker-entrypoint-initdb.d/:Z \
@@ -28,12 +28,12 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/postgresql-app.pid \
     --env POSTGRES_INITDB_ARGS=--data-checksums \
     --env TZ=UTC \
     ${POSTGRES_IMAGE}
-ExecStartPost=/usr/bin/bash -c "while ! podman  exec postgresql-app psql -U postgres -d immich ;  do sleep 5 ; done"
-ExecStop=/usr/bin/podman stop --ignore --cidfile %t/postgresql-app.ctr-id -t 10
-ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/postgresql-app.ctr-id
-ExecReload=/usr/bin/podman kill -s HUP postgresql-app
+ExecStartPost=/usr/bin/bash -c "while ! podman  exec database psql -U postgres -d immich ;  do sleep 5 ; done"
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/database.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/database.ctr-id
+ExecReload=/usr/bin/podman kill -s HUP database
 SyslogIdentifier=%u
-PIDFile=%t/postgresql-app.pid
+PIDFile=%t/database.pid
 Type=forking
 
 [Install]

@@ -6,7 +6,7 @@
 [Unit]
 Description=Podman  immich-machine-learning.service
 BindsTo=immich.service
-After=immich.service postgresql-app.service immich-redis.service
+After=immich.service database.service redis.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
