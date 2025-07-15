@@ -8,4 +8,4 @@
 set -e
 
 echo "Dumping immich postgres database"
-podman exec postgresql-app pg_dump -U postgres --format=c  immich > immich.pg_dump
+podman exec database pg_dump -U postgres --format=c  immich > immich.pg_dump
