@@ -8,6 +8,8 @@
 set -e -o pipefail
 exec 1>&2 # Redirect any output to the journal (stderr)
 
+exit 0
+
 mkdir -vp restore
 cat - >restore/immich_restore.sh <<'EOS'
 # Read dump file from standard input:
