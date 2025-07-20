@@ -12,11 +12,9 @@ mkdir -vp restore
 cat - >restore/immich_restore.sh <<'EOS'
 # Read dump file from standard input:
 pg_restore --no-owner --no-privileges -U postgres -d immich
-# The script is sourced, override entrypoint args and exit:
-set -- true
+# Needed to stop the container
+exit 0
 EOS
-
-chmod +x restore/immich_restore.sh
 
 # Override the image /docker-entrypoint-initdb.d contents, to restore the
 # DB dump file. The container will be stopped at the end
