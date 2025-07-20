@@ -6,10 +6,10 @@
     {
       "fileMatch": ["build-images.sh"],
       "matchStrings": [
-        "docker\\.io/nginx:(?<currentValue>[-0-9\\.a-z]+)"
+        "ghcr\\.io/immich-app/immich-server:(?<currentValue>[-0-9\\.a-z]+)"
       ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "nginx"
+      "datasourceTemplate": "github",
+      "depNameTemplate": "immich-app/immich-server"
     },
     {
       "fileMatch": ["build-images.sh"],
