@@ -8,16 +8,15 @@
 set -e -o pipefail
 exec 1>&2 # Redirect any output to the journal (stderr)
 
-exit 0
-
 mkdir -vp restore
 cat - >restore/immich_restore.sh <<'EOS'
 # Read dump file from standard input:
 pg_restore --no-owner --no-privileges -U postgres -d immich
-ec=$?
-docker_temp_server_stop
-exit $ec
+# The script is sourced, override entrypoint args and exit:
+set -- true
 EOS
+
+chmod +x restore/immich_restore.sh
 
 # Override the image /docker-entrypoint-initdb.d contents, to restore the
 # DB dump file. The container will be stopped at the end
@@ -32,6 +31,7 @@ podman run \
     --env POSTGRES_USER=postgres \
     --env POSTGRES_PASSWORD=Nethesis,1234 \
     --env POSTGRES_DB=immich \
+    --env POSTGRES_INITDB_ARGS=--data-checksums \
     --env TZ=UTC \
     "${POSTGRES_IMAGE}" < immich.pg_dump
 
