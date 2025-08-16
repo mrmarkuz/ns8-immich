@@ -4,39 +4,28 @@
     "config:recommended"
   ],
   "ignorePaths": [
-    "**/ui/**",
-    "**/.devcontainer/**"
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/build-images.sh/"
-      ],
-      "matchStrings": [
-        "ghcr\\.io/immich-app/immich-server:(?<currentValue>[-0-9\\.a-z]+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "immich-app/immich-server"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/build-images.sh/"
-      ],
-      "matchStrings": [
-        "docker\\.io/postgres:(?<currentValue>[-0-9\\.a-z]+)"
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "postgres"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "postgres"
-      ],
-      "allowedVersions": "<= 16.0"
-    }
-  ]
+        "**/ui/**"
+    ],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "fileMatch": [
+                "(^|/)test-module\\.sh$",
+                "(^|/)build-images?\\.sh$"
+            ],
+            "matchStrings": [
+                "docker\\.io\\/(?:library\\/)?(?<depName>[-0-9a-z_\\/.]+):(?<currentValue>[-0-9a-zA-Z_.]+)",
+                "(?<depName>(?:ghcr|quay)\\.io\\/[-0-9a-z_\\/.]+):(?<currentValue>[-0-9a-zA-Z_.]+)"
+            ],
+            "datasourceTemplate": "docker"
+        }
+    ],
+    "packageRules": [
+        {
+            "matchPackageNames": [
+                "node"
+            ],
+            "allowedVersions": "<=18"
+        }
+    ]
 }
