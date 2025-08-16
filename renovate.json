@@ -1,10 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "ignorePaths": ["**/ui/**", "**/.devcontainer/**"],
-  "regexManagers": [
+  "extends": [
+    "config:recommended"
+  ],
+  "ignorePaths": [
+    "**/ui/**",
+    "**/.devcontainer/**"
+  ],
+  "customManagers": [
     {
-      "fileMatch": ["build-images.sh"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/build-images.sh/"
+      ],
       "matchStrings": [
         "ghcr\\.io/immich-app/immich-server:(?<currentValue>[-0-9\\.a-z]+)"
       ],
@@ -12,7 +20,10 @@
       "depNameTemplate": "immich-app/immich-server"
     },
     {
-      "fileMatch": ["build-images.sh"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/build-images.sh/"
+      ],
       "matchStrings": [
         "docker\\.io/postgres:(?<currentValue>[-0-9\\.a-z]+)"
       ],
@@ -22,7 +33,9 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["postgres"],
+      "matchPackageNames": [
+        "postgres"
+      ],
       "allowedVersions": "<= 16.0"
     }
   ]
