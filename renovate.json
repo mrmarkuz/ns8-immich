@@ -16,7 +16,7 @@
       "matchStrings": [
         "ghcr\\.io/immich-app/immich-server:(?<currentValue>[-0-9\\.a-z]+)"
       ],
-      "datasourceTemplate": "github",
+      "datasourceTemplate": "github-tags",
       "depNameTemplate": "immich-app/immich-server"
     },
     {
