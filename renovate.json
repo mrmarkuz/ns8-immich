@@ -9,8 +9,7 @@
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": [
-                "(^|/)test-module\\.sh$",
+            "fileMatch": [ 
                 "(^|/)build-images?\\.sh$"
             ],
             "matchStrings": [
