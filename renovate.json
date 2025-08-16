@@ -1,16 +1,16 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "ignorePaths": [
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended"
+    ],
+    "ignorePaths": [
         "**/ui/**"
     ],
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": [ 
-                "(^|/)build-images?\\.sh$"
+            "managerFilePatterns": [
+                "/(^|/)build-images?\\.sh$/"
             ],
             "matchStrings": [
                 "docker\\.io\\/(?:library\\/)?(?<depName>[-0-9a-z_\\/.]+):(?<currentValue>[-0-9a-zA-Z_.]+)",
