@@ -38,7 +38,7 @@ buildah run \
 buildah add "${container}" imageroot /imageroot
 buildah add "${container}" ui/dist /ui
 buildah config --entrypoint=/ \
-    --label="org.nethserver.min-core=3.12.4-0"
+    --label="org.nethserver.min-core=3.12.4-0" \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
