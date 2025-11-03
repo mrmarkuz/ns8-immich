@@ -19,7 +19,7 @@ agent.set_weight(os.path.basename(__file__), 0) # Validation step, no task progr
 data = json.load(sys.stdin)
 
 # Setup default values
-host = data.get("host")
+host = data["host"]
 # do not test if it is the same host
 oldHost = os.environ.get('TRAEFIK_HOST','')
 

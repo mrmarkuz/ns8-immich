@@ -38,10 +38,11 @@ buildah run \
 buildah add "${container}" imageroot /imageroot
 buildah add "${container}" ui/dist /ui
 buildah config --entrypoint=/ \
+    --label="org.nethserver.min-core=3.12.4-0"
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:41eacbe83eca995561fe43814fd4891e16e39632806253848efaf04d3c8a8b84 ghcr.io/immich-app/immich-server:v2.2.1 ghcr.io/immich-app/immich-machine-learning:v2.2.1 docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571" \
+    --label="org.nethserver.images=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23 ghcr.io/immich-app/immich-server:v2.2.1 ghcr.io/immich-app/immich-machine-learning:v2.2.1 docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
