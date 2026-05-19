@@ -22,6 +22,7 @@ ExecStartPre=/bin/rm -f %t/immich.pid %t/immich.pod-id
 ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/immich.pid \
     --pod-id-file %t/immich.pod-id \
     --name immich \
+    --network=slirp4netns:allow_host_loopback=true \
     --publish 127.0.0.1:${TCP_PORT}:2283 \
     --replace
 ExecStart=/usr/bin/podman pod start --pod-id-file %t/immich.pod-id
