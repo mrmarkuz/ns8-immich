@@ -20,7 +20,7 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/immich-app.pid \
     --cidfile %t/immich-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/immich.pod-id --replace -d --name  immich-app \
-    --volume immich-data:/usr/src/app/upload:Z \
+    --volume immich-data:/data:z \
     --volume /etc/localtime:/etc/localtime:ro \
 #    --env UPLOAD_LOCATION=./library \
 #    --env DB_DATA_LOCATION=./postgres \
