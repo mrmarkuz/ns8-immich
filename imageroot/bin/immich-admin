@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#
+# Wrapper of immich-admin command
+#
+
+exec podman exec immich-app immich-admin "${@}"
