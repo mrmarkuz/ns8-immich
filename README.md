@@ -20,6 +20,14 @@ Install from Software center:
 
 Set at least the FQDN in the app settings and browse to `https://<FQDN>`
 
+## Immich admin
+
+It's possible to use the immich-admin command inside the environment:
+
+    runagent -m immich1 immich-admin
+
+See [documentation](https://docs.immich.app/administration/server-commands)
+
 ## Uninstall
 
 To uninstall the instance:
