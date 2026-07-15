@@ -10,18 +10,18 @@ After=immich.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
-EnvironmentFile=%S/state/environment
-# EnvironmentFile=%S/state/secrets/passwords.secret
+EnvironmentFile=%E/state/environment
+# EnvironmentFile=%E/state/secrets/passwords.secret
 Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/database.pid %t/database.ctr-id
-ExecStartPre=/bin/mkdir -p %S/state/restore/
+ExecStartPre=/bin/mkdir -p %E/state/restore/
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/database.pid \
     --cidfile %t/database.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/immich.pod-id --replace -d --name database \
-    --env-file=%S/state/environment \
+    --env-file=%E/state/environment \
     --volume postgres-data:/var/lib/postgresql/data:Z \
-    --volume %S/state/restore/:/docker-entrypoint-initdb.d/:Z \
+    --volume %E/state/restore/:/docker-entrypoint-initdb.d/:Z \
     --env POSTGRES_USER=postgres \
     --env POSTGRES_PASSWORD=Nethesis,1234 \
     --env POSTGRES_DB=immich \

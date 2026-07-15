@@ -33,4 +33,4 @@ os.replace(envfile + ".tmp", envfile)
 
 # NOTE: The generated envfile can be included in the service container
 #       with `podman run --env-file` or in Systemd unit with
-#       `Environment=-%S/state/smarthost.env`
+#       `Environment=-%E/state/smarthost.env`
