@@ -933,15 +933,17 @@
     "@babel/helper-string-parser" "^7.29.7"
     "@babel/helper-validator-identifier" "^7.29.7"
 
-"@carbon/icon-helpers@^10.24.0":
-  version "10.24.0"
-  resolved "https://registry.npmjs.org/@carbon/icon-helpers/-/icon-helpers-10.24.0.tgz"
-  integrity sha512-kmzN2Zjyp4EmCAlGu561+dJVABH96n5+RnjmsPdv4wrSx+FNyzbxnKYV1x2FYrTxtZ9LB+pd3EofEyVuQM6V0Q==
-
 "@carbon/icon-helpers@^10.37.0":
   version "10.78.0"
   resolved "https://registry.yarnpkg.com/@carbon/icon-helpers/-/icon-helpers-10.78.0.tgz#7c4dc6651a81995a2c87038408785ee4cc025569"
   integrity sha512-WOPmO722eqsRKr1UGjboH5eRv0486SjDc/5brx18cOCFzkdGxkR42+D5vmAKWkJzJAazdPIPuWdyoCb58xSdCw==
+  dependencies:
+    "@ibm/telemetry-js" "^1.5.0"
+
+"@carbon/icon-helpers@^10.84.0":
+  version "10.84.0"
+  resolved "https://registry.yarnpkg.com/@carbon/icon-helpers/-/icon-helpers-10.84.0.tgz#54cb2a7c12cb912efa6caa45f3f610ef7bd30538"
+  integrity sha512-G+LVR42568CbluBzu7uV+ZMmI5tT2ojnWCmRgDB8Z3xKls1D5DU6fQHyiAg10JjLo+zBGUih6eEVSCqq9oXkEw==
   dependencies:
     "@ibm/telemetry-js" "^1.5.0"
 
@@ -953,11 +955,12 @@
     "@carbon/icon-helpers" "^10.37.0"
 
 "@carbon/icons-vue@^10.37.0":
-  version "10.41.0"
-  resolved "https://registry.npmjs.org/@carbon/icons-vue/-/icons-vue-10.41.0.tgz"
-  integrity sha512-cS/nKIv/l92+r9E0Xrt2bG78WSdROYzt6D+AXnMwgwBPhCN7kJc4mKiKyYI7LScrwgsJ8y4Ay2PUrn5txebaxw==
+  version "10.140.0"
+  resolved "https://registry.yarnpkg.com/@carbon/icons-vue/-/icons-vue-10.140.0.tgz#8aadf4e1fbd42c9f17c60aa19650b8342ab09dfb"
+  integrity sha512-3254jyevSnllcdU+zEymKJpx9niUp12jcvEMPToBkr6V0q8cZCmmBNV+UzFl/udoQ8/DGhSd36E6eSxJtx/lqQ==
   dependencies:
-    "@carbon/icon-helpers" "^10.24.0"
+    "@carbon/icon-helpers" "^10.84.0"
+    "@ibm/telemetry-js" "^1.5.0"
 
 "@carbon/telemetry@0.1.0", "@carbon/telemetry@^0.1.0":
   version "0.1.0"
@@ -1008,9 +1011,9 @@
     "@hapi/hoek" "^8.3.0"
 
 "@ibm/telemetry-js@^1.5.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@ibm/telemetry-js/-/telemetry-js-1.11.0.tgz#3270e7b7ec8f30eb940e1d28448315ea9287062e"
-  integrity sha512-RO/9j+URJnSfseWg9ZkEX9p+a3Ousd33DBU7rOafoZB08RqdzxFVYJ2/iM50dkBuD0o7WX7GYt1sLbNgCoE+pA==
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@ibm/telemetry-js/-/telemetry-js-1.12.0.tgz#d935716e254c043f87e37aa4373ab57fd4a1786b"
+  integrity sha512-tNgmk2k8loNDTnPInlu7yMP9YOCr9UMwSnXN7SCEsGIV8xHfTawhXlDnp1PV0Lbv+2GoLQKSgkShlJeGPi4jTg==
 
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
