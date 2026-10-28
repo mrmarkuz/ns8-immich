@@ -1,8 +1,11 @@
 {
   "name": "Immich",
   "description": {
-    "en": "Online photo management",
-    "de": "Online Fotoverwaltung"
+    "en": "Immich is a self-hosted, open-source photo and video management solution",
+    "de": "Immich ist eine selbstgehostete Open-Source-Lösung zur Verwaltung von Fotos und Videos",
+    "fr": "Immich est une solution de gestion de photos et de vidéos, open source et auto-hébergée",
+    "it": "Immich è una soluzione open source per la gestione di foto e video, pensata per l'hosting in autonomia",
+    "es": "Immich es una solución de gestión de fotos y vídeos de código abierto y autohospedada"
   },
   "categories": ["multimedia"],
   "authors": [
