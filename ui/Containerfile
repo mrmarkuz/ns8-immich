@@ -1,4 +1,7 @@
 FROM node:26-slim
+RUN (command -v corepack >/dev/null || npm install -g corepack) \
+    && corepack enable \
+    && yarn set version stable
 WORKDIR /app
 ENV NODE_OPTIONS=--openssl-legacy-provider
 EXPOSE 8080
