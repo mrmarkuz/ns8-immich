@@ -2066,10 +2066,10 @@ aws4@^1.8.0:
   resolved "https://registry.npmmirror.com/aws4/download/aws4-1.11.0.tgz?cache=0&sync_timestamp=1604101385256&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faws4%2Fdownload%2Faws4-1.11.0.tgz"
   integrity sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk=
 
-axios@^0.34.0:
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.34.0.tgz#8ecc4e5d865e3f36c9dc432ee490a88e8dd009c2"
-  integrity sha512-CkOmqy7BaT4VC9+wRUmSM3LVwCkKK3UYc7koEqIHWRpOTJypwdNctaVOgnOjhHP3599Ubq2K8KqYwfC7c8NdPQ==
+axios@^0.35.0:
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.35.0.tgz#c02b9481cf186214c7509985bff7337224219a9f"
+  integrity sha512-nIDzOGsDEAQZot5aP5ZZ6y/GRDv8woMaDJMab/VxlZIRw0OG6GPbkAMca55+AO1JgvRZquh5pp+RjzBDt0N2fQ==
   dependencies:
     follow-redirects "^1.15.4"
     form-data "^4.0.4"
