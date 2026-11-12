@@ -17,14 +17,17 @@ images=()
 repobase="${REPOBASE:-ghcr.io/mrmarkuz}"
 # Configure the image name
 reponame="immich"
-
+# Node.js 25+ no longer ships Corepack, install it from npm
+# renovate: datasource=npm packageName=corepack
+corepack_version=0.36.0
 # Create a new empty container image
 container=$(buildah from scratch)
 
 # Reuse existing nodebuilder-immich container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-immich; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-immich -v "${PWD}:/usr/src:Z" docker.io/library/node:lts
+    buildah from --name nodebuilder-immich -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.0-slim
+    buildah run nodebuilder-immich sh -c "npm install -g corepack@${corepack_version} && corepack enable"
 fi
 
 echo "Build static UI files with node..."
@@ -32,7 +35,7 @@ buildah run \
     --workingdir=/usr/src/ui \
     --env="NODE_OPTIONS=--openssl-legacy-provider" \
     nodebuilder-immich \
-    sh -c "(command -v corepack >/dev/null || npm install -g corepack) && corepack enable && yarn install && yarn build"
+    sh -c "yarn install && yarn build"
 
 # Add imageroot directory to the container image
 buildah add "${container}" imageroot /imageroot
@@ -43,7 +46,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
 	--label="org.nethserver.volumes=immich-data" \
-    --label="org.nethserver.images=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23 ghcr.io/immich-app/immich-server:v3.4.1 ghcr.io/immich-app/immich-machine-learning:v3.4.1 docker.io/valkey/valkey:9@sha256:c123e3715db63d06d4ad6964884037aa0d5d4d703939b9929954112889708e1d" \
+    --label="org.nethserver.images=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23 ghcr.io/immich-app/immich-server:v3.4.1 ghcr.io/immich-app/immich-machine-learning:v3.4.1 docker.io/valkey/valkey:9@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
