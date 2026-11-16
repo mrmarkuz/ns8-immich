@@ -26,7 +26,7 @@ container=$(buildah from scratch)
 # Reuse existing nodebuilder-immich container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-immich; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-immich -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.0-slim
+    buildah from --name nodebuilder-immich -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.1-slim
     buildah run nodebuilder-immich sh -c "npm install -g corepack@${corepack_version} && corepack enable"
 fi
 
